@@ -13,3 +13,6 @@ WiringPi should be installed on your raspberry pi to work.
 
 ### Warning
 This project is still a work in progress, things might change over some commits. Try to keep your version up to date.
+
+#### Dependencies
+This module uses the stb header file library to convert image files to color arrays.
