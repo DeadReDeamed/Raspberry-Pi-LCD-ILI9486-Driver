@@ -8,5 +8,8 @@ Originally created for the raspberry pi zero 2 w, this is a driver for the Ardui
 - Pin 21 is used as the CS pin
 - Pin 22 is used as the Reset pin
 
+### Note
+WiringPi should be installed on your raspberry pi to work.
+
 ### Warning
 This project is still a work in progress, things might change over some commits. Try to keep your version up to date.
