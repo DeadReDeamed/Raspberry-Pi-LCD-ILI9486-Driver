@@ -104,7 +104,7 @@ void LCD_Init(){
                 LCD_writeCmd8(0x2C);
                 for(int x = 0; x < 120; x++){
                     for(int y = 0; y < 80; y++){
-                            writeData16(0x0000);
+                            LCD_writeData16(0x0000);
                     }
                 }
             digitalWrite(CSPIN, 1);
@@ -148,7 +148,7 @@ void LCD_writeCmd8(uint8_t cmd){
  * This function writes 16 bit data to the LCD screen
  * @param data This is de data that needs to be written
  */ 
-void writeData16(uint16_t data){
+void LCD_writeData16(uint16_t data){
     *(dataPointer + 3) = 0xFFFF;
     *dataPointer &= 0x0000;
     *dataPointer = data;
@@ -239,7 +239,7 @@ void LCD_write_addr(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t *co
         LCD_writeCmd8(0x2C);
         for(int i = 0; i < width; i++){
             for(int x = 0; x < height; x++){
-                writeData16(*(colors + (i * height) + x));
+                LCD_writeData16(*(colors + (i * height) + x));
             }
         }
         digitalWrite(CSPIN, 1);
