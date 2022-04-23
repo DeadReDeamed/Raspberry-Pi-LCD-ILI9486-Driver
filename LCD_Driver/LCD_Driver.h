@@ -1,7 +1,19 @@
+/*
+ * Created on Sat Apr 23 2022
+ * Author: Luca Brugel
+ * File: LCD_Driver.h
+ * 
+ */
+
+
+#ifndef LCD_DRIVER
+#define LCD_DRIVER
+
 #include <stdio.h>
 #include <wiringPi.h>
 #include <stdint.h>
 #include <stdlib.h>
+
 
 #define WRPIN 16
 #define RSPIN 20
@@ -18,8 +30,10 @@ void writeCmd16(uint16_t cmd);
 
 void writeData16(uint16_t data);
 
-void writeData8(uint8_t data);
+void LCD_writeData8(uint8_t data);
 
-void writeCmd8(uint8_t cmd);
+void LCD_writeCmd8(uint8_t cmd);
 
 void LCD_write_addr(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t *colors);
+
+#endif
