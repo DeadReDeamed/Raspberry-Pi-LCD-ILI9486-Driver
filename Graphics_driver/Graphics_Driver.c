@@ -1,8 +1,23 @@
+/*
+ * Created on Sat Apr 23 2022
+ * Author: Luca Brugel
+ * File: Graphics_Driver.c
+ * 
+ */
+
+
 #include "Graphics_Driver.h"
 
+/** 
+ * Defines the screen width and height 
+ * [WARNING] dont change 
+ */
 #define SCRWIDTH 480
 #define SCRHEIGHT 320
 
+/**
+ * Defines a struct for coordinates. Used for updating the screen. 
+ */
 typedef struct coordinates{
     int x1;
     int x2;
@@ -10,11 +25,21 @@ typedef struct coordinates{
     int y2;
 } coordinates_t;
 
+/**
+ * Current screen pixels
+ */ 
 uint16_t screenPixels[SCRWIDTH][SCRHEIGHT];
+
+/**
+ * Updated screen pixels for comparison
+ */ 
 uint16_t newFramePixels[SCRWIDTH][SCRHEIGHT];
 
 static coordinates_t * GD_screen_changes(int *size);
 
+/**
+ * Initializes the screen and sets the screen arrays to 0x0000 for updating
+ */ 
 void GD_init(){
     for(int x = 0; x < SCRWIDTH; x++){
         for(int y = 0; y < SCRHEIGHT; y++){
@@ -29,6 +54,9 @@ void GD_init(){
     }
 }
 
+/**
+ * Checks for differences in the new screen pixels and if needed updates the pixels that are different.
+ */ 
 void GD_update_screen(){
     int size = 0;
     coordinates_t *coordinatesArray = GD_screen_changes(&size);
@@ -54,10 +82,21 @@ void GD_update_screen(){
     }
 }
 
+/**
+ * Sets the whole screen to the pixels given
+ * @param screenPixels Array for all the pixels on the screen
+ */ 
 void GD_set_screen(uint16_t screenPixels[480][320]){
-
+    for(int x = 0; x < SCRWIDTH; x++){
+        for(int y = 0; y < SCRHEIGHT; y++){
+            newFramePixels[x][y] = screenPixels[x][y];
+        }
+    }
 }
 
+/**
+ * Clears screen and sets all pixels to 0x0000
+ */ 
 void GD_clear_screen(){
     for(int x = 0; x < SCRWIDTH; x++){
         for(int y = 0; y < SCRHEIGHT; y++){
@@ -66,6 +105,14 @@ void GD_clear_screen(){
     }
 }
 
+/**
+ * Sets a block of pixels to the given image
+ * @param x Position to draw
+ * @param y Position to draw
+ * @param image_p Pointer to an array of pixels to draw
+ * @param h Height of the image
+ * @param w Width of the image
+ */ 
 void GD_set_block(int x, int y, uint16_t *image_p, int h, int w){
     for(int i = 0; i < h; i++){
         for(int z = 0; z < w; z++){
@@ -74,6 +121,11 @@ void GD_set_block(int x, int y, uint16_t *image_p, int h, int w){
     }
 }
 
+/**
+ * Goes through the pixels and checks for changes
+ * @param size Pointer to the size of the array of coordinates returned
+ * @return Returnes a pointer to an array of coordinates to change. If NULL then there are no changes
+ */ 
 static coordinates_t *GD_screen_changes(int *size){
     coordinates_t *changedCoordinates = NULL;
     bool readingChanges = false;
@@ -136,6 +188,12 @@ static coordinates_t *GD_screen_changes(int *size){
     return changedCoordinates;
 }
 
+/**
+ * Converts RGB to the hex number needed to send to the LCD
+ * @param r Red value 0-255
+ * @param g Green value 0-255
+ * @param b Blue value 0-255
+ */ 
 uint16_t convertRGBtoHex(int r, int g, int b){
     uint16_t hexValue = 0x0000;
     int rValue = round((r/255.0) * 31);
